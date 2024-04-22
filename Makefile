@@ -90,7 +90,7 @@ wasm_mvp:
 	mkdir -p build/wasm_mvp
 	emcmake cmake $(GENERATOR) $(EXTENSION_FLAGS) $(WASM_COMPILE_TIME_COMMON_FLAGS) -Bbuild/wasm_mvp -DCMAKE_CXX_FLAGS="$(WASM_CXX_MVP_FLAGS)" -S duckdb
 	emmake make -j8 -Cbuild/wasm_mvp
-	cd build/wasm_eh/extension/autocomplete && emcc $f -o ../../autocomplete.duckdb_extension.wasm autocomplete.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_autocomplete_init" --target wasm32-unknown-emscripten && cd ../../../..
+	cd build/wasm_mvp/extension/autocomplete && emcc $f -o ../../autocomplete.duckdb_extension.wasm autocomplete.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_autocomplete_init" --target wasm32-unknown-emscripten && cd ../../../..
 
 wasm_eh:
 	mkdir -p build/wasm_eh
@@ -102,7 +102,7 @@ wasm_threads:
 	mkdir -p ./build/wasm_threads
 	emcmake cmake $(GENERATOR) $(EXTENSION_FLAGS) $(WASM_COMPILE_TIME_COMMON_FLAGS) -Bbuild/wasm_threads -DCMAKE_CXX_FLAGS="$(WASM_CXX_THREADS_FLAGS)" -S duckdb
 	emmake make -j8 -Cbuild/wasm_threads
-	cd build/wasm_eh/extension/autocomplete && emcc $f -o ../../autocomplete.duckdb_extension.wasm autocomplete.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_autocomplete_init" --target wasm32-unknown-emscripten -sSHARED_MEMORY=1 -pthread && cd ../../../..
+	cd build/wasm_threads/extension/autocomplete && emcc $f -o ../../autocomplete.duckdb_extension.wasm autocomplete.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_autocomplete_init" --target wasm32-unknown-emscripten -sSHARED_MEMORY=1 -pthread && cd ../../../..
 
 #### Misc
 format:

@@ -2,7 +2,9 @@
 
 # Extension from this repo
 duckdb_extension_load(autocomplete
-	DONT_LINK)
+	DONT_LINK
+)
+
 duckdb_extension_load(httpfs
     SOURCE_DIR extension/httpfs
     INCLUDE_DIR extension/httpfs
