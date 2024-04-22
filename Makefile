@@ -107,8 +107,8 @@ wasm_threads:
 	emcmake cmake $(GENERATOR) $(EXTENSION_FLAGS) $(WASM_COMPILE_TIME_COMMON_FLAGS) -Bbuild/wasm_threads -DCMAKE_CXX_FLAGS="$(WASM_CXX_THREADS_FLAGS)" -S duckdb
 	emmake make -j8 -Cbuild/wasm_threads
 	cd build/wasm_threads/extension/${EXT_NAME} && emcc $f -o ../../${EXT_NAME}.duckdb_extension.wasm ${EXT_NAME}.duckdb_extension.wasm.lib $(WASM_LINK_TIME_FLAGS) -sSHARED_MEMORY=1 -pthread ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a
-	cd build/wasm_eh/extension/azure && emcc $f -o ../../azure.duckdb_extension.wasm azure.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_azure_init" ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a ${AZURE_LINKED_LIBS} --target wasm32-unknown-emscripten
-	cd build/wasm_eh/extension/autocomplete && emcc $f -o ../../autocomplete.duckdb_extension.wasm autocomplete.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_autocomplete_init" --target wasm32-unknown-emscripten
+	cd build/wasm_eh/extension/azure && emcc $f -o ../../azure.duckdb_extension.wasm azure.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_azure_init" ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a ${AZURE_LINKED_LIBS} --target wasm32-unknown-emscripten -sSHARED_MEMORY=1 -pthread
+	cd build/wasm_eh/extension/autocomplete && emcc $f -o ../../autocomplete.duckdb_extension.wasm autocomplete.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_autocomplete_init" --target wasm32-unknown-emscripten -sSHARED_MEMORY=1 -pthread
 
 #### Misc
 format:
