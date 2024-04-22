@@ -77,10 +77,13 @@ test_debug: debug
 # WASM config
 VCPKG_EMSDK_FLAGS=-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=$(EMSDK)/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
 WASM_COMPILE_TIME_COMMON_FLAGS=-DWASM_LOADABLE_EXTENSIONS=1 -DBUILD_EXTENSIONS_ONLY=1 -DSKIP_EXTENSIONS="parquet;json" $(TOOLCHAIN_FLAGS) $(VCPKG_EMSDK_FLAGS) -DDUCKDB_CUSTOM_PLATFORM='${DUCKDB_PLATFORM}' -DDUCKDB_EXPLICIT_PLATFORM='${DUCKDB_PLATFORM}'
-WASM_CXX_MVP_FLAGS=
+WASM_CXX_MVP_FLAGS=-fPIC --target=wasm32-unknown-emscripten
 WASM_CXX_EH_FLAGS=$(WASM_CXX_MVP_FLAGS) -fwasm-exceptions -DWEBDB_FAST_EXCEPTIONS=1
 WASM_CXX_THREADS_FLAGS=$(WASM_COMPILE_TIME_EH_FLAGS) -DWITH_WASM_THREADS=1 -DWITH_WASM_SIMD=1 -DWITH_WASM_BULK_MEMORY=1 -pthread
 WASM_LINK_TIME_FLAGS=-O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${EXT_NAME}_version,_${EXT_NAME}_init"
+
+#AZURE_LINKED_LIBS=../../vcpkg_installed/wasm32-emscripten/lib/libazure*.a
+AZURE_LINKED_LIBS=../../vcpkg_installed/wasm32-emscripten/lib/libazure-identity.a
 
 # WASM targets
 wasm_mvp:
@@ -94,6 +97,7 @@ wasm_eh:
 	emcmake cmake $(GENERATOR) $(EXTENSION_FLAGS) $(WASM_COMPILE_TIME_COMMON_FLAGS) -Bbuild/wasm_eh -DCMAKE_CXX_FLAGS="$(WASM_CXX_EH_FLAGS)" -S duckdb
 	emmake make -j8 -Cbuild/wasm_eh
 	cd build/wasm_eh/extension/${EXT_NAME} && emcc $f -o ../../${EXT_NAME}.duckdb_extension.wasm ${EXT_NAME}.duckdb_extension.wasm.lib $(WASM_LINK_TIME_FLAGS) ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a
+	cd build/wasm_eh/extension/azure && emcc $f -o ../../azure.duckdb_extension.wasm azure.duckdb_extension.wasm.lib -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_azure_init" ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a ${AZURE_LINKED_LIBS} --target wasm32-unknown-emscripten
 
 wasm_threads:
 	mkdir -p ./build/wasm_threads
