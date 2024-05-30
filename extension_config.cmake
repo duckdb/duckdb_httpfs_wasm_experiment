@@ -17,6 +17,6 @@ duckdb_extension_load(httpfs
 		DONT_LINK
             LOAD_TESTS
             GIT_URL https://github.com/carlopi/duckdb_azure
-            GIT_TAG 9f91862a4792efe486151729539c6f44cc2baa1b
+            GIT_TAG main
             )
 	
