@@ -10,7 +10,7 @@ duckdb_extension_load(httpfs
     INCLUDE_DIR extension/httpfs
     LOAD_TESTS
     DONT_LINK
-    LINKED_LIBS "../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a"
+    LINKED_LIBS "../../third_party/mbedtls/libduckdb_mbedtls.a;../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a;../../vcpkg_installed/wasm32-emscripten/lib/libssl.a"
 )
 
     duckdb_extension_load(azure
@@ -18,5 +18,6 @@ duckdb_extension_load(httpfs
             LOAD_TESTS
             GIT_URL https://github.com/carlopi/duckdb_azure
             GIT_TAG main
+    LINKED_LIBS "../../third_party/mbedtls/libduckdb_mbedtls.a;../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a;../../vcpkg_installed/wasm32-emscripten/lib/libssl.a;../../vcpkg_installed/wasm32-emscripten/lib/libazure-identity.a"
             )
 	
