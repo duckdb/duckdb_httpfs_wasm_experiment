@@ -25,9 +25,7 @@ build_loadable_extension(
   create_secret_functions.cpp
   httpfs_extension.cpp)
 
-if(MINGW)
-  set(OPENSSL_USE_STATIC_LIBS TRUE)
-endif()
+set(OPENSSL_USE_STATIC_LIBS TRUE)
 
 find_package(OpenSSL REQUIRED)
 include_directories(${OPENSSL_INCLUDE_DIR})
