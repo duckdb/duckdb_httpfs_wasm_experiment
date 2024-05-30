@@ -10,10 +10,13 @@
 
 namespace duckdb_httplib_openssl {
 struct Response;
+struct Result;
 class Client;
 } // namespace duckdb_httplib_openssl
 
 namespace duckdb {
+
+class HTTPLogger;
 
 using HeaderMap = case_insensitive_map_t<string>;
 
@@ -37,6 +40,7 @@ struct HTTPParams {
 	static constexpr bool DEFAULT_FORCE_DOWNLOAD = false;
 	static constexpr bool DEFAULT_KEEP_ALIVE = true;
 	static constexpr bool DEFAULT_ENABLE_SERVER_CERT_VERIFICATION = false;
+	static constexpr uint64_t DEFAULT_HF_MAX_PER_PAGE = 0;
 
 	uint64_t timeout;
 	uint64_t retries;
@@ -47,23 +51,28 @@ struct HTTPParams {
 	bool enable_server_cert_verification;
 	std::string ca_cert_file;
 
-	static HTTPParams ReadFrom(FileOpener *opener);
+	string bearer_token;
+
+	idx_t hf_max_per_page;
+
+	static HTTPParams ReadFrom(optional_ptr<FileOpener> opener);
 };
 
 class HTTPFileHandle : public FileHandle {
 public:
-	HTTPFileHandle(FileSystem &fs, string path, uint8_t flags, const HTTPParams &params);
+	HTTPFileHandle(FileSystem &fs, const string &path, FileOpenFlags flags, const HTTPParams &params);
 	~HTTPFileHandle() override;
 	// This two-phase construction allows subclasses more flexible setup.
-	virtual void Initialize(FileOpener *opener);
+	virtual void Initialize(optional_ptr<FileOpener> opener);
 
 	// We keep an http client stored for connection reuse with keep-alive headers
 	duckdb::unique_ptr<duckdb_httplib_openssl::Client> http_client;
+	optional_ptr<HTTPLogger> http_logger;
 
 	const HTTPParams http_params;
 
 	// File handle info
-	uint8_t flags;
+	FileOpenFlags flags;
 	idx_t length;
 	time_t last_modified;
 
@@ -83,22 +92,23 @@ public:
 
 	shared_ptr<HTTPState> state;
 
+	void AddHeaders(HeaderMap &map);
+
 public:
 	void Close() override {
 	}
 
 protected:
-	virtual void InitializeClient();
+	virtual void InitializeClient(optional_ptr<ClientContext> client_context);
 };
 
 class HTTPFileSystem : public FileSystem {
 public:
-	static duckdb::unique_ptr<duckdb_httplib_openssl::Client> GetClient(const HTTPParams &http_params,
-	                                                                    const char *proto_host_port);
+	static duckdb::unique_ptr<duckdb_httplib_openssl::Client>
+	GetClient(const HTTPParams &http_params, const char *proto_host_port, optional_ptr<HTTPFileHandle> hfs);
 	static void ParseUrl(string &url, string &path_out, string &proto_host_port_out);
-	duckdb::unique_ptr<FileHandle> OpenFile(const string &path, uint8_t flags, FileLockType lock = DEFAULT_LOCK,
-	                                        FileCompressionType compression = DEFAULT_COMPRESSION,
-	                                        FileOpener *opener = nullptr) final;
+	duckdb::unique_ptr<FileHandle> OpenFile(const string &path, FileOpenFlags flags,
+	                                        optional_ptr<FileOpener> opener = nullptr) final;
 
 	vector<string> Glob(const string &path, FileOpener *opener = nullptr) override {
 		return {path}; // FIXME
@@ -128,7 +138,7 @@ public:
 	void FileSync(FileHandle &handle) override;
 	int64_t GetFileSize(FileHandle &handle) override;
 	time_t GetLastModifiedTime(FileHandle &handle) override;
-	bool FileExists(const string &filename) override;
+	bool FileExists(const string &filename, optional_ptr<FileOpener> opener) override;
 	void Seek(FileHandle &handle, idx_t location) override;
 	idx_t SeekPosition(FileHandle &handle) override;
 	bool CanHandleFile(const string &fpath) override;
@@ -138,7 +148,7 @@ public:
 	bool OnDiskFile(FileHandle &handle) override {
 		return false;
 	}
-	bool IsPipe(const string &filename) override {
+	bool IsPipe(const string &filename, optional_ptr<FileOpener> opener) override {
 		return false;
 	}
 	string GetName() const override {
@@ -149,12 +159,20 @@ public:
 	}
 	static void Verify();
 
-	// Global cache
-	duckdb::unique_ptr<HTTPMetadataCache> global_metadata_cache;
+	optional_ptr<HTTPMetadataCache> GetGlobalCache();
 
 protected:
-	virtual duckdb::unique_ptr<HTTPFileHandle> CreateHandle(const string &path, uint8_t flags, FileLockType lock,
-	                                                        FileCompressionType compression, FileOpener *opener);
+	virtual duckdb::unique_ptr<HTTPFileHandle> CreateHandle(const string &path, FileOpenFlags flags,
+	                                                        optional_ptr<FileOpener> opener);
+
+	static duckdb::unique_ptr<ResponseWrapper>
+	RunRequestWithRetry(const std::function<duckdb_httplib_openssl::Result(void)> &request, string &url, string method,
+	                    const HTTPParams &params, const std::function<void(void)> &retry_cb = {});
+
+private:
+	// Global cache
+	mutex global_cache_lock;
+	duckdb::unique_ptr<HTTPMetadataCache> global_metadata_cache;
 };
 
 } // namespace duckdb
