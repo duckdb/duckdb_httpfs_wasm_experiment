@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4fc03f0829..8cddd58d36 100644
+index 4fc03f0829..5ef6ff17d7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -836,11 +836,14 @@ function(build_loadable_extension_directory NAME OUTPUT_DIRECTORY EXTENSION_VERS
+@@ -836,12 +836,16 @@ function(build_loadable_extension_directory NAME OUTPUT_DIRECTORY EXTENSION_VERS
    if(EMSCRIPTEN)
      # Compile the library into the actual wasm file
      string(TOUPPER ${NAME} EXTENSION_NAME_UPPERCASE)
@@ -15,7 +15,9 @@ index 4fc03f0829..8cddd58d36 100644
        POST_BUILD
 -      COMMAND emcc $<TARGET_FILE:${TARGET_NAME}> -o $<TARGET_FILE:${TARGET_NAME}>.wasm -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${NAME}_init,_${NAME}_version" ${WASM_THREAD_FLAGS} ${TO_BE_LINKED}
 +      COMMAND
-+      emcc $<TARGET_FILE:${TARGET_NAME}> -o $<TARGET_FILE:${TARGET_NAME}>.wasm -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${NAME}_init,_${NAME}_version" ${WASM_THREAD_FLAGS} ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a -v
++      emcc $<TARGET_FILE:${TARGET_NAME}> -o $<TARGET_FILE:${TARGET_NAME}>.wasm -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${NAME}_init,_${NAME}_version" ${WASM_THREAD_FLAGS} ../../third_party/mbedtls/libduckdb_mbedtls.a ../../httplib/libduckdb_httplib.a ../../third_party/yyjson/libduckdb_yyjson.a ../../deps/local/lib/*.a -v
        )
++      #emcc $<TARGET_FILE:${TARGET_NAME}> -o $<TARGET_FILE:${TARGET_NAME}>.wasm -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${NAME}_init,_${NAME}_version" ${WASM_THREAD_FLAGS} ../../third_party/mbedtls/libduckdb_mbedtls.a ../../httplib/libduckdb_httplib.a ../../third_party/yyjson/libduckdb_yyjson.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a ../../vcpkg_installed/wasm32-emscripten/lib/libssl.a -v
    endif()
    add_custom_command(
+     TARGET ${TARGET_NAME}
