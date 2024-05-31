@@ -9,7 +9,7 @@ duckdb_extension_load(httpfs
     SOURCE_DIR extension/httpfs
     INCLUDE_DIR extension/httpfs
     DONT_LINK
-    LINKED_LIBS "../../*/*/lib/lib*.a"
+    LINKED_LIBS "../../**/*/lib/lib*.a"
 )
 ##
 #    duckdb_extension_load(azure
