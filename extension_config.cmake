@@ -9,7 +9,7 @@ duckdb_extension_load(httpfs
     SOURCE_DIR extension/httpfs
     INCLUDE_DIR extension/httpfs
     DONT_LINK
-    LINKED_LIBS "../../third_party/mbedtls/libduckdb_mbedtls.aX../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.aX../../vcpkg_installed/wasm32-emscripten/lib/libssl.a"
+    LINKED_LIBS "../../*/*/lib/lib*.a"
 )
 ##
 #    duckdb_extension_load(azure
