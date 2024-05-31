@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4fc03f0829..9e873ef611 100644
+index 4fc03f0829..5579703509 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -836,11 +836,16 @@ function(build_loadable_extension_directory NAME OUTPUT_DIRECTORY EXTENSION_VERS
+@@ -836,11 +836,14 @@ function(build_loadable_extension_directory NAME OUTPUT_DIRECTORY EXTENSION_VERS
    if(EMSCRIPTEN)
      # Compile the library into the actual wasm file
      string(TOUPPER ${NAME} EXTENSION_NAME_UPPERCASE)
@@ -13,8 +13,6 @@ index 4fc03f0829..9e873ef611 100644
        TARGET ${TARGET_NAME}
        POST_BUILD
 -      COMMAND emcc $<TARGET_FILE:${TARGET_NAME}> -o $<TARGET_FILE:${TARGET_NAME}>.wasm -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${NAME}_init,_${NAME}_version" ${WASM_THREAD_FLAGS} ${TO_BE_LINKED}
-+      COMMAND
-+      ls "../../**/*.a"
 +      COMMAND
 +      emcc $<TARGET_FILE:${TARGET_NAME}> -o $<TARGET_FILE:${TARGET_NAME}>.wasm -O3 -sSIDE_MODULE=2 -sEXPORTED_FUNCTIONS="_${NAME}_init,_${NAME}_version" ${WASM_THREAD_FLAGS} "${TO_BE_LINKED}" -v
        )
