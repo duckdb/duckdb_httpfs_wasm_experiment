@@ -1,13 +1,14 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4fc03f0829..5579703509 100644
+index 4fc03f0829..9325e39c74 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -836,11 +836,14 @@ function(build_loadable_extension_directory NAME OUTPUT_DIRECTORY EXTENSION_VERS
    if(EMSCRIPTEN)
      # Compile the library into the actual wasm file
      string(TOUPPER ${NAME} EXTENSION_NAME_UPPERCASE)
+-    string(REPLACE ";" " " TO_BE_LINKED "${DUCKDB_EXTENSION_${EXTENSION_NAME_UPPERCASE}_LINKED_LIBS}")
 +    message(WARNING "${DUCKDB_EXTENSION_${EXTENSION_NAME_UPPERCASE}_LINKED_LIBS}")
-     string(REPLACE ";" " " TO_BE_LINKED "${DUCKDB_EXTENSION_${EXTENSION_NAME_UPPERCASE}_LINKED_LIBS}")
++    string(REPLACE "|" " " TO_BE_LINKED "${DUCKDB_EXTENSION_${EXTENSION_NAME_UPPERCASE}_LINKED_LIBS}")
 +    message(WARNING "${TO_BE_LINKED}")
      add_custom_command(
        TARGET ${TARGET_NAME}
