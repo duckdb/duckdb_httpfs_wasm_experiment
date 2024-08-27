@@ -352,7 +352,6 @@ jobs:
         run: |
           cd duckdb
           git checkout ${{ inputs.duckdb_version }}
-          git apply ../patch.patch
 
       - uses: mymindstorm/setup-emsdk@v13
         with:
