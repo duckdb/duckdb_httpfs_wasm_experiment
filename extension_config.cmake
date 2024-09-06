@@ -22,7 +22,7 @@ duckdb_extension_load(httpfs
 	
 duckdb_extension_load(spatial
     DONT_LINK LOAD_TESTS
-    GIT_URL https://github.com/duckdb/duckdb_spatial.git
+    GIT_URL https://github.com/Maxxen/duckdb_spatial.git
     GIT_TAG 88d490a8d2782ccfea2a90895ba2e3ff166fa274
     INCLUDE_DIR spatial/include
     TEST_DIR test/sql
