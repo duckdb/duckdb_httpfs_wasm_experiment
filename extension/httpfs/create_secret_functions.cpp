@@ -1,7 +1,6 @@
 #include "create_secret_functions.hpp"
 #include "s3fs.hpp"
 #include "duckdb/main/extension_util.hpp"
-#include "duckdb/common/local_file_system.hpp"
 
 namespace duckdb {
 
@@ -207,9 +206,7 @@ unique_ptr<BaseSecret> CreateBearerTokenFunctions::CreateBearerSecretFromConfig(
 static string TryReadTokenFile(const string &token_path, const string error_source_message,
                                bool fail_on_exception = true) {
 	try {
-		LocalFileSystem fs;
-		auto handle = fs.OpenFile(token_path, {FileOpenFlags::FILE_FLAGS_READ});
-		return handle->ReadLine();
+		throw std::exception("No local file system");
 	} catch (std::exception &ex) {
 		if (!fail_on_exception) {
 			return "";
@@ -235,13 +232,6 @@ CreateBearerTokenFunctions::CreateHuggingFaceSecretFromCredentialChain(ClientCon
 		return CreateSecretFunctionInternal(context, input, token);
 	}
 
-	// Step 3: Try the path $HF_HOME/token
-	const char *hf_home_env = std::getenv("HF_HOME");
-	if (hf_home_env) {
-		auto token_path = LocalFileSystem().JoinPath(hf_home_env, "token");
-		auto token = TryReadTokenFile(token_path, " constructed using the HF_HOME variable: '$HF_HOME/token'");
-		return CreateSecretFunctionInternal(context, input, token);
-	}
 
 	// Step 4: Check the default path
 	auto token = TryReadTokenFile("~/.cache/huggingface/token", "", false);
