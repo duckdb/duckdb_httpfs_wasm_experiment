@@ -20,14 +20,14 @@ duckdb_extension_load(autocomplete
 #            )
 
 	
-#duckdb_extension_load(spatial
-#    DONT_LINK LOAD_TESTS
-#    GIT_URL https://github.com/Maxxen/duckdb_spatial.git
-#    GIT_TAG 88d490a8d2782ccfea2a90895ba2e3ff166fa274
-#    INCLUDE_DIR spatial/include
-#    TEST_DIR test/sql
-#	LINKED_LIBS '../../deps/local/lib/*.a'
-#    )
+duckdb_extension_load(spatial
+    DONT_LINK LOAD_TESTS
+    GIT_URL https://github.com/carlopi/duckdb_spatial.git
+    GIT_TAG 5720575fafe6b10748a8d2172a72eb93182f59f6
+    INCLUDE_DIR spatial/include
+    TEST_DIR test/sql
+	LINKED_LIBS '../../deps/local/lib/*.a'
+    )
 
 duckdb_extension_load(json DONT_LINK)
 duckdb_extension_load(parquet DONT_LINK)
