@@ -11,9 +11,11 @@ build_static_extension(
   hffs.cpp
   s3fs.cpp
   httpfs.cpp
+  http_state.cpp
   crypto.cpp
   create_secret_functions.cpp
   httpfs_extension.cpp)
+
 set(PARAMETERS "-warnings")
 build_loadable_extension(
   httpfs
@@ -21,6 +23,7 @@ build_loadable_extension(
   hffs.cpp
   s3fs.cpp
   httpfs.cpp
+  http_state.cpp
   crypto.cpp
   create_secret_functions.cpp
   httpfs_extension.cpp)
@@ -29,18 +32,18 @@ if(MINGW)
   set(OPENSSL_USE_STATIC_LIBS TRUE)
 endif()
 
- find_package(OpenSSL REQUIRED)
- include_directories(${OPENSSL_INCLUDE_DIR})
- target_link_libraries(httpfs_loadable_extension duckdb_mbedtls
+find_package(OpenSSL REQUIRED)
+include_directories(${OPENSSL_INCLUDE_DIR})
+target_link_libraries(httpfs_loadable_extension duckdb_mbedtls
                       ${OPENSSL_LIBRARIES})
 target_link_libraries(httpfs_extension duckdb_mbedtls ${OPENSSL_LIBRARIES})
- 
+
 if(MINGW)
-   find_package(ZLIB)
-   target_link_libraries(httpfs_loadable_extension ZLIB::ZLIB -lcrypt32)
-   target_link_libraries(httpfs_extension ZLIB::ZLIB -lcrypt32)
+  find_package(ZLIB)
+  target_link_libraries(httpfs_loadable_extension ZLIB::ZLIB -lcrypt32)
+  target_link_libraries(httpfs_extension ZLIB::ZLIB -lcrypt32)
 endif()
- 
+
 install(
   TARGETS httpfs_extension
   EXPORT "${DUCKDB_EXPORT_SET}"
