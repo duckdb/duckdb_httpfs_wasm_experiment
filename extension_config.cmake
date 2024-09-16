@@ -6,8 +6,8 @@ duckdb_extension_load(autocomplete
 )
 #
 duckdb_extension_load(httpfs
-    SOURCE_DIR extension/httpfs
-    INCLUDE_DIR extension/httpfs
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/extension/httpfs
+    INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/extension/httpfs
     DONT_LINK
     LINKED_LIBS ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a 
 )
