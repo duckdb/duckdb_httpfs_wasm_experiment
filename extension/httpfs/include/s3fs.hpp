@@ -12,7 +12,6 @@
 #include "duckdb/common/case_insensitive_map.hpp"
 #include "httpfs.hpp"
 
-#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.hpp"
 
 #include <condition_variable>

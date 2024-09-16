@@ -12,7 +12,6 @@
 #include <chrono>
 #include <string>
 
-#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.hpp"
 
 #include <map>

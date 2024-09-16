@@ -4,7 +4,6 @@
 #include "duckdb/common/common.hpp"
 #include <stdio.h>
 
-#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.hpp"
 
 namespace duckdb {
@@ -30,7 +29,7 @@ void hex256(hash_bytes &in, hash_str &out) {
 		pout[1] = hex[*pin & 0xF];
 	}
 }
-
+/*
 const EVP_CIPHER *GetCipher(const string &key) {
 	// For now, we only support GCM ciphers
 	switch (key.size()) {
@@ -55,7 +54,6 @@ AESGCMStateSSL::~AESGCMStateSSL() {
 	// Clean up
 	EVP_CIPHER_CTX_free(gcm_context);
 }
-
 bool AESGCMStateSSL::IsOpenSSL() {
 	return ssl;
 }
@@ -137,6 +135,7 @@ size_t AESGCMStateSSL::Finalize(data_ptr_t out, idx_t out_len, data_ptr_t tag, i
 		throw InvalidInputException("Computed AES tag differs from read AES tag, are you using the right key?");
 	}
 }
+*/
 
 } // namespace duckdb
 

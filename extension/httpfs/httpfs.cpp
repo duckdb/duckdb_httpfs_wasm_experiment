@@ -19,7 +19,6 @@
 #include <string>
 #include <thread>
 
-#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.hpp"
 
 namespace duckdb {
@@ -238,10 +237,10 @@ unique_ptr<duckdb_httplib_openssl::Client> HTTPFileSystem::GetClient(const HTTPP
 	auto client = make_uniq<duckdb_httplib_openssl::Client>(proto_host_port);
 	client->set_follow_location(true);
 	client->set_keep_alive(http_params.keep_alive);
-	if (!http_params.ca_cert_file.empty()) {
-		client->set_ca_cert_path(http_params.ca_cert_file.c_str());
-	}
-	client->enable_server_certificate_verification(http_params.enable_server_cert_verification);
+	//if (!http_params.ca_cert_file.empty()) {
+	//	client->set_ca_cert_path(http_params.ca_cert_file.c_str());
+	//}
+	//client->enable_server_certificate_verification(http_params.enable_server_cert_verification);
 	client->set_write_timeout(http_params.timeout);
 	client->set_read_timeout(http_params.timeout);
 	client->set_connection_timeout(http_params.timeout);

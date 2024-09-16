@@ -8,15 +8,17 @@
 #include "duckdb/main/client_data.hpp"
 #include "http_metadata_cache.hpp"
 
-namespace duckdb_httplib_openssl {
+namespace duckdb_httplib {
 struct Response;
 class Result;
 class Client;
 namespace detail {
 struct ci;
 }
-using Headers = std::multimap<std::string, std::string, duckdb_httplib_openssl::detail::ci>;
+using Headers = std::multimap<std::string, std::string, duckdb_httplib::detail::ci>;
 } // namespace duckdb_httplib_openssl
+
+namespace duckdb_httplib_openssl = duckdb_httplib;
 
 namespace duckdb {
 
@@ -138,7 +140,7 @@ public:
 	static void ParseUrl(string &url, string &path_out, string &proto_host_port_out);
 	duckdb::unique_ptr<FileHandle> OpenFile(const string &path, FileOpenFlags flags,
 	                                        optional_ptr<FileOpener> opener = nullptr) final;
-	static duckdb::unique_ptr<duckdb_httplib_openssl::Headers> InitializeHeaders(HeaderMap &header_map,
+	static duckdb::unique_ptr<duckdb_httplib::Headers> InitializeHeaders(HeaderMap &header_map,
 	                                                                             const HTTPParams &http_params);
 
 	vector<string> Glob(const string &path, FileOpener *opener = nullptr) override {
