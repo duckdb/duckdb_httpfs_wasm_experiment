@@ -75,10 +75,11 @@ duckdb_extension_load(inet
     INCLUDE_DIR src/include
     TEST_DIR test/sql
     )
-duckdb_extension_load(excel
-	DONT_LINK
-    LOAD_TESTS
-    GIT_URL https://github.com/duckdb/duckdb_excel
-    GIT_TAG 0e99dc789038c7af658e30d579b818473a6d6ea8
-    INCLUDE_DIR extension/excel/include
-    )
+#
+#duckdb_extension_load(excel
+#	DONT_LINK
+#    LOAD_TESTS
+#    GIT_URL https://github.com/duckdb/duckdb_excel
+#    GIT_TAG 0e99dc789038c7af658e30d579b818473a6d6ea8
+#    INCLUDE_DIR extension/excel/include
+##    )
