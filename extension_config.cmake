@@ -37,7 +37,8 @@ duckdb_extension_load(tpch DONT_LINK)
 
 
 
-#duckdb_extension_load(httpfs DONT_LINK)
+duckdb_extension_load(httpfs DONT_LINK
+    LINKED_LIBS ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a )
 
 duckdb_extension_load(sqlite_scanner
         DONT_LINK LOAD_TESTS
