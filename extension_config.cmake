@@ -1,10 +1,10 @@
 # This file is included by DuckDB's build system. It specifies which extension to load
 
 # Extension from this repo
+#    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/extension/httpfs
+#    INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/extension/httpfs/include
 #
 duckdb_extension_load(httpfs
-    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/extension/httpfs
-    INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/extension/httpfs/include
     DONT_LINK
     LINKED_LIBS ../../third_party/mbedtls/libduckdb_mbedtls.a ../../vcpkg_installed/wasm32-emscripten/lib/libcrypto.a 
 )
