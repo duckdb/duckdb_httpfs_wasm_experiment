@@ -29,8 +29,8 @@ build_loadable_extension(
   httpfs_extension.cpp)
 
 target_link_libraries(httpfs_loadable_extension duckdb_mbedtls
-                      ${OPENSSL_LIBRARIES})
-target_link_libraries(httpfs_extension duckdb_mbedtls ${OPENSSL_LIBRARIES})
+                      )
+target_link_libraries(httpfs_extension duckdb_mbedtls)
 
 if(MINGW)
   find_package(ZLIB)
