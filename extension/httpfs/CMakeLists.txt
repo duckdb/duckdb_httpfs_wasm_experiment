@@ -4,7 +4,7 @@ project(HTTPFsExtension)
 
 add_extension_definitions()
 
-include_directories(include ../../third_party/httplib ../parquet/include)
+include_directories(include ../../duckdb/third_party/httplib ../parquet/include)
 
 build_static_extension(
   httpfs
