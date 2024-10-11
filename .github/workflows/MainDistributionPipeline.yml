@@ -21,7 +21,7 @@ jobs:
     with:
       duckdb_version: d57a94430e
       ci_tools_version: main
-      override_ci_tools_repository: carlopi/extension-ci-tools
+      override_ci_tools_repository: duckdb/extension-ci-tools
       extension_name: ${{ inputs.extension_name || 'httpfs' }}
       exclude_archs: 'linux_amd64_gcc4;linux_amd64;linux_arm64;osx_amd64;osx_arm64;windows_amd64_rtools;windows_amd64'
 
