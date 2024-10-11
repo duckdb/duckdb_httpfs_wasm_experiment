@@ -40,19 +40,19 @@ duckdb_extension_load(sqlite_scanner
         GIT_TAG 315861963c8106397af36cbda10faebc8dae485a
         )
 #
-duckdb_extension_load(sqlsmith
-        DONT_LINK LOAD_TESTS
-        GIT_URL https://github.com/duckdb/duckdb_sqlsmith
-        GIT_TAG f24be8b5b0cd0eeed7541e10cff42d7050771afc
-        )
+#duckdb_extension_load(sqlsmith
+#        DONT_LINK LOAD_TESTS
+#        GIT_URL https://github.com/duckdb/duckdb_sqlsmith
+#        GIT_TAG f24be8b5b0cd0eeed7541e10cff42d7050771afc
+#        )
 
-################# SUBSTRAIT
-    duckdb_extension_load(substrait
-           LOAD_TESTS DONT_LINK
-            GIT_URL https://github.com/duckdb/substrait
-           GIT_TAG be71387cf0a484dc7b261a0cb21abec0d0e0ce5c
-            )
-
+################## SUBSTRAIT
+#    duckdb_extension_load(substrait
+#           LOAD_TESTS DONT_LINK
+#            GIT_URL https://github.com/duckdb/substrait
+#           GIT_TAG be71387cf0a484dc7b261a0cb21abec0d0e0ce5c
+#            )
+#
 
 ################## VSS
 #duckdb_extension_load(vss
