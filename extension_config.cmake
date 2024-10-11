@@ -62,12 +62,14 @@ duckdb_extension_load(vss
         GIT_TAG 77739ea5382cce3220af83803ac0b1e98b3ab7d8
         TEST_DIR test/sql
     )
-duckdb_extension_load(inet
-       DONT_LINK
-    LOAD_TESTS
-    GIT_URL https://github.com/duckdb/duckdb_inet
-    GIT_TAG eca867b2517af06eabc89ccd6234266e9a7d6d71
-    INCLUDE_DIR src/include
-    TEST_DIR test/sql
-    )
+
+#
+#duckdb_extension_load(inet
+#       DONT_LINK
+#    LOAD_TESTS
+##    GIT_URL https://github.com/duckdb/duckdb_inet
+#    GIT_TAG eca867b2517af06eabc89ccd6234266e9a7d6d71
+#    INCLUDE_DIR src/include
+#    TEST_DIR test/sql
+#    )
 
