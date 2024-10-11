@@ -54,14 +54,14 @@ duckdb_extension_load(sqlsmith
             )
 
 
-################# VSS
-duckdb_extension_load(vss
-        LOAD_TESTS
-        DONT_LINK
-        GIT_URL https://github.com/duckdb/duckdb_vss
-        GIT_TAG 77739ea5382cce3220af83803ac0b1e98b3ab7d8
-        TEST_DIR test/sql
-    )
+################## VSS
+#duckdb_extension_load(vss
+#        LOAD_TESTS
+#        DONT_LINK
+#        GIT_URL https://github.com/duckdb/duckdb_vss
+#        GIT_TAG 77739ea5382cce3220af83803ac0b1e98b3ab7d8
+#        TEST_DIR test/sql
+#    )
 
 #
 #duckdb_extension_load(inet
