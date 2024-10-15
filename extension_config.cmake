@@ -25,20 +25,20 @@ duckdb_extension_load(spatial
       LINKED_LIBS '../../deps/local/lib/*.a'
     )
 
-duckdb_extension_load(json DONT_LINK)
-duckdb_extension_load(parquet DONT_LINK)
-duckdb_extension_load(demo_capi DONT_LINK)
-duckdb_extension_load(autocomplete DONT_LINK)
+#duckdb_extension_load(json DONT_LINK)
+#duckdb_extension_load(parquet DONT_LINK)
+#duckdb_extension_load(demo_capi DONT_LINK)
+#duckdb_extension_load(autocomplete DONT_LINK)
 
-duckdb_extension_load(fts DONT_LINK)
-duckdb_extension_load(icu DONT_LINK)
-duckdb_extension_load(tpcds DONT_LINK)
-duckdb_extension_load(tpch DONT_LINK)
-duckdb_extension_load(sqlite_scanner
-        DONT_LINK LOAD_TESTS
-        GIT_URL https://github.com/duckdb/sqlite_scanner
-        GIT_TAG 315861963c8106397af36cbda10faebc8dae485a
-        )
+#duckdb_extension_load(fts DONT_LINK)
+#duckdb_extension_load(icu DONT_LINK)
+#duckdb_extension_load(tpcds DONT_LINK)
+#duckdb_extension_load(tpch DONT_LINK)
+#duckdb_extension_load(sqlite_scanner
+#        DONT_LINK LOAD_TESTS
+#        GIT_URL https://github.com/duckdb/sqlite_scanner
+#        GIT_TAG 315861963c8106397af36cbda10faebc8dae485a
+#        )
 #
 #duckdb_extension_load(sqlsmith
 #        DONT_LINK LOAD_TESTS
@@ -55,13 +55,13 @@ duckdb_extension_load(sqlite_scanner
 #
 
 ################## VSS
-duckdb_extension_load(vss
-        LOAD_TESTS
-        DONT_LINK
-        GIT_URL https://github.com/duckdb/duckdb_vss
-        GIT_TAG 77739ea5382cce3220af83803ac0b1e98b3ab7d8
-        TEST_DIR test/sql
-    )
+#duckdb_extension_load(vss
+ #       LOAD_TESTS
+#        DONT_LINK
+#        GIT_URL https://github.com/duckdb/duckdb_vss
+#        GIT_TAG 77739ea5382cce3220af83803ac0b1e98b3ab7d8
+#        TEST_DIR test/sql
+#    )
 
 #
 #duckdb_extension_load(inet
